@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>API Calls &laquo; Visualizing Mobile Broadband API Documentation &laquo; FCC</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link rel="shortcut icon" href="img/fcc_favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="css/normalize.css">
+
+  <link href='css/highlight.default.css' media='screen' rel='stylesheet' type='text/css'/>
+  <link href='css/screen.css' media='screen' rel='stylesheet' type='text/css'/>
+  <link rel="stylesheet" href="css/style.css">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!--[if lt IE 9]>
+  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <link rel="stylesheet" href="css/for-ie-only.css">
+  <![endif]-->
+
+  <script type="text/javascript" src="lib/shred.bundle.js" /></script>
+  <script src='lib/jquery-1.8.0.min.js' type='text/javascript'></script>
+  <script src='lib/jquery.slideto.min.js' type='text/javascript'></script>
+  <script src='lib/jquery.wiggle.min.js' type='text/javascript'></script>
+  <script src='lib/jquery.ba-bbq.min.js' type='text/javascript'></script>
+  <script src='lib/handlebars-1.0.0.js' type='text/javascript'></script>
+  <script src='lib/underscore-min.js' type='text/javascript'></script>
+  <script src='lib/backbone-min.js' type='text/javascript'></script>
+  <script src='lib/swagger.js' type='text/javascript'></script>
+  <script src='swagger-ui.js' type='text/javascript'></script>
+  <script src='lib/highlight.7.3.pack.js' type='text/javascript'></script>
+  <script type="text/javascript">
+    $(function () {
+      window.swaggerUi = new SwaggerUi({
+	  //url: "http://localhost:8080/api-docs/",
+      url: "/vizmo/api-docs/apis.json",
+      dom_id: "swagger-ui-container",
+      supportedSubmitMethods: ['get'],
+      onComplete: function(swaggerApi, swaggerUi){
+        if(console) {
+          console.log("Loaded SwaggerUI")
+        }
+        $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
+        //$onload = Docs.toggleEndpointListForResource('carrier');
+		//$onload = Docs.toggleEndpointListForResource('meta');
+		$onload = Docs.toggleEndpointListForResource('carrier.json');
+		$onload = Docs.toggleEndpointListForResource('meta.json');
+      },
+      onFailure: function(data) {
+        if(console) {
+          console.log("Unable to Load SwaggerUI");
+          console.log(data);
+        }
+      },
+      docExpansion: "none"
+    });
+
+    $('#input_apiKey').change(function() {
+      var key = $('#input_apiKey')[0].value;
+      console.log("key: " + key);
+      if(key && key.trim() != "") {
+        console.log("added key " + key);
+        window.authorizations.add("key", new ApiKeyAuthorization("api_key", key, "query"));
+      }
+    });
+    window.swaggerUi.load();	
+  });
+  </script>
+  <style>
+
+	#swagger-ui-container {font-size: larger;}
+  </style>
+</head>
+
+<body id="console">
+
+  <header class="header cf" role="banner">
+  <div id="jumpLinks" class="jumpLinks"> <a class="visuallyhidden focusable" href="#skiptarget1">Skip to sidebar navigation</a> <a class="visuallyhidden focusable" href="#skiptarget2">Skip to main content</a> <a class="visuallyhidden focusable" href="#skiptarget3">Skip to footer and contact information</a> </div>
+            			<div class="wrap">
+<a href="http://www.fcc.gov"> <img class="logo" src="img/logo-fcc.png" alt="Go to the Federal Communications Commission homepage at www.fcc.gov" title="Go to the Federal Communications Commission homepage at www.fcc.gov"> </a>
+			<h1 class="site-title"><a href="#void">Visualizing Mobile Broadband</a><small>Results from the FCC Speed Test</small></h1>
+        	</div>
+
+
+  </header>
+
+<div class="wrap">
+    <div class="content">
+<a id="skiptarget1" class="visuallyhidden" tabindex="-1"></a>
+    <aside>
+    <h2 class="page-title"><a href="../index.html">API Docs</a></h2>
+      <p class="intro">Create your own visualization or application using the API.</p>
+    <nav>
+        <ul>
+          <li><a href="../index.html" class="overview">Overview</a></li>
+          <li><a href="../basics.html" class="basics">API Basics</a></li>
+          <li><a href="../console/" class="console">API Calls</a></li>
+		  <li><a href="../output.html" class="output">API Output</a></li>
+          <li><a href="../fields.html" class="fields">API Fields</a></li>
+        </ul>
+    </nav>
+    </aside>
+    
+<a id="skiptarget2" class="visuallyhidden" tabindex="-1"></a>
+    <section class="main-content" role="main">
+
+      <h3 id='api_calls'>API calls</h3>
+
+		<p>Explore the API here hands-on. Need a little help? Read our <a href="../basics.html">API Basics</a> to get started.
+
+
+<div id="message-bar" class="swagger-ui-wrap">
+</div>
+
+<span class="anchor" id="swagger-ui-offset-fix"> </span>
+<div id="swagger-ui-container" class="swagger-ui-wrap">
+
+</div>
+
+
+
+
+    </section>
+
+    </div>
+  </div> <!--wrap-->
+
+<a id="skiptarget3" class="visuallyhidden" tabindex="-1"></a>
+    <footer class="footer cf" role="contentinfo">
+      <div class="wrap">
+        <section class="footer-oss">
+                <h4>Open source</h4>
+                <p>
+                    This FCC documentation site is modified from <a href="https://github.com/cfpb/api">an open source project</a> maintained by the Consumer Financial Protection Bureau.
+                </p>
+                <p>
+                    As a work of the United States Government, source code released by the FCC is in the public domain by default within the United States.
+                </p>
+            </section>
+            <section class="footer-links">
+                <ul>
+                    <li>
+                        <a href="http://www.fcc.gov/">fcc.gov</a>
+                    </li>
+                    <li>
+                        <a href="http://github.com/fcc/vizmo">github.com/fcc/vizmo</a>
+                    </li>
+                    <li>
+                        <a href="http://www.fcc.gov/developers">FCC Developers</a>
+                    </li>
+                </ul>
+            </section>
+      </div>
+    </footer>
+ 
+  <script src="http://www.fcc.gov/sites/all/themes/fcc/js/ga-event-tracking.js"></script>
+</body>
+</html>

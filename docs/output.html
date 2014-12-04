@@ -1,0 +1,26 @@
+---
+layout: default
+title: API Output
+nav: output
+---
+
+<h3>API Output</h3>
+
+
+<body id="output">
+	<div>
+		<h5>Sample Output</h5>
+		<pre id="samp-json">
+
+		</pre>
+	</div>
+</body>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>	
+$(function() {
+	$.getJSON('/vizmo/api-docs/sample.json', function(data) {
+		var samp_json = JSON.stringify(data, undefined, 3);
+		$( "#samp-json" ).html(samp_json);
+	});		
+});
+</script>

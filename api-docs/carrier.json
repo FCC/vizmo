@@ -1,0 +1,141 @@
+{
+    "apiVersion": "1.0",
+    "apis": [
+        {
+            "operations": [
+                {
+                    "method": "GET",
+                    "nickname": "getCarrier",
+                    "parameters": [
+						{
+                            "allowableValues": {
+                                "valueType": "LIST",
+                                "values": [
+                                    "json",
+									"jsonp",
+                                    "geojson",
+                                    "xml"                                   
+                                ]
+                            },
+                            "dataType": "string",
+                            "description": "File format",
+                            "name": "file",
+                            "paramType": "path",
+                            "required": true
+                        },
+						{
+                            "dataType": "string",
+                            "description": "Callback",
+                            "name": "callback",
+                            "paramType": "query",
+                            "required": false
+                        },
+                        {
+                            "dataType": "float",
+                            "description": "Latitude",
+                            "name": "lat",
+                            "paramType": "query",
+                            "required": false
+                        },
+                        {
+                            "dataType": "float",
+                            "description": "Longitude",
+                            "name": "lon",
+                            "paramType": "query",
+                            "required": false
+                        }
+                    ],
+                    "produces": [
+                        "application/json",
+                        "application/javascript",
+                        "application/xml"
+                    ],
+                    "summary": "Get data for all carriers."
+                }
+            ],
+            "path": "/api/carrier.{file}"
+        },
+        {
+            "operations": [
+                {
+                    "method": "GET",
+                    "nickname": "getCarrierProvider",
+                    "parameters": [
+						{
+                            "allowableValues": {
+                                "valueType": "LIST",
+                                "values": [
+                                    "json",
+									"jsonp",
+                                    "geojson",
+                                    "xml"                                   
+                                ]
+                            },
+                            "dataType": "string",
+                            "description": "File format",
+                            "name": "file",
+                            "paramType": "path",
+                            "required": true
+                        },
+						{
+                            "dataType": "string",
+                            "description": "Callback",
+                            "name": "callback",
+                            "paramType": "query",
+                            "required": false
+                        },
+                        {
+                            "allowableValues": {
+                                "valueType": "LIST",
+                                "values": [
+                                    "combined",
+									"att",
+                                    "tmobile",
+                                    "verizon",
+                                    "sprint",
+                                    "other"
+                                ]
+                            },
+                            "dataType": "string",
+                            "description": "Provider",
+                            "name": "provider",
+                            "paramType": "path",
+                            "required": true
+                        },
+                        {
+                            "dataType": "float",
+                            "description": "Latitude",
+                            "name": "lat",
+                            "paramType": "query",
+                            "required": false
+                        },
+                        {
+                            "dataType": "float",
+                            "description": "Longitude",
+                            "name": "lon",
+                            "paramType": "query",
+                            "required": false
+                        }						
+                    ],
+                    "produces": [
+                        "application/json",
+                        "application/javascript",
+                        "application/xml"
+                    ],
+                    "summary": "Get data for specific provider."
+                }
+            ],
+            "path": "/api/carrier/{provider}.{file}"
+        }
+
+   ],
+    "basePath": "http://ltstndj-web01a:8080",
+    "models": {},
+    "produces": [
+        "application/json",
+        "application/javascript",
+        "application/xml"
+    ],
+    "resourcePath": "/api",
+    "swaggerVersion": "1.2"
+}

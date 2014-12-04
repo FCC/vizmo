@@ -1,0 +1,186 @@
+{
+  "fields": {
+	"type": {
+      "value": "\"Feature\"",
+      "type": "string",
+      "description": "Description of the output."
+    },
+	"properties": {
+      "value": "",
+      "type": "array",
+      "description": "Array containing all data properties of API output."
+    },
+	"id": {
+      "value": "",
+      "type": "object",
+      "description": "Object with information about the data."
+    },
+	"date": {
+      "value": "\"total\"",
+      "type": "string",
+      "description": "Date range of aggregated data. "
+    },	
+	"time": {
+      "value": "\"total\"",
+      "type": "string",
+      "description": "Time range of aggregated data."
+    },
+	"carrier": {
+      "value": "\"combined\"",
+      "type": "string",
+      "description": "Mobile carrier provider of data."
+    },	
+	"geo_group": {
+      "value": "\"hex\"",
+      "type": "string",
+      "description": "Geographical grouping of aggregated data."
+    },
+	"geo_type": {
+      "value": "",
+      "type": "string",
+      "description": "Type of geography of output data. If not specified, API returns best available."
+    },		
+	"geo_zoom": {
+      "value": "",
+      "type": "integer",
+      "description": "Maximum zoom level using Web Mercator tile system."
+    },
+	"geo_id": {
+      "value": "\"national\"",
+      "type": "string",
+      "description": "Unique identifier of geography within geo_type."
+    },
+	"value": {
+      "value": "",
+      "type": "object",
+      "description": "Object containing output values of aggregated data."
+    },		
+	"total": {
+      "value": "",
+      "type": "object",
+      "description": "Output values for total aggregated data."
+    },	
+	"weekday": {
+      "value": "",
+      "type": "object",
+      "description": "Output values for data on weekdays: Monday, Tuesday, Wednesday, Thursday, and Friday."
+    },
+	"weekend": {
+      "value": "",
+      "type": "object",
+      "description": "Output values for data on weekend: Saturday and Sunday"
+    },
+	"onpeak": {
+      "value": "",
+      "type": "object",
+      "description": "Output values during on peak times: Weekdays (7:00am - 10:00am and 4:00pm - 8:00pm)."
+    },
+	"offpeak": {
+      "value": "",
+      "type": "object",
+      "description": "Output values during off peak times: Weekdays (before 7:00am, 10:00am - 4:00pm, after 8:00pm) and Weekends."
+    },
+	"hourly": {
+      "value": "",
+      "type": "object",
+      "description": "Object containing individual hourly data using 24 hour clock: hours 0 - 23."
+    },
+	"hour_{0-23}": {
+      "value": "",
+      "type": "object",
+      "description": "Output values for data of specific hour of the day. Includes all days of the week."
+    },
+	"download": {
+      "value": "mbps",
+      "type": "object",
+      "description": "Aggregated download speed values. Measured in megabytes per second (mbps)."
+    },
+	"upload": {
+      "value": "mbps",
+      "type": "object",
+      "description": "Aggregated upload speed values. Measured in megabytes per second (mbps)"
+    },
+	"latency": {
+      "value": "ms",
+      "type": "object",
+      "description": "Aggregated upload speed values. Measured in milliseconds (ms)"
+    },	
+	"packet_loss": {
+      "value": "%",
+      "type": "object",
+      "description": "Aggregated packet loss values. Measured in percentage (%)"
+    },	
+	"participation": {
+      "value": "",
+      "type": "integer",
+      "description": "Number of test participants included in the aggregated data."
+    },
+	"median": {
+      "value": "",
+      "type": "numeric",
+      "description": "The value of the middle of the range of aggregated data."
+    },
+	"average": {
+      "value": "",
+      "type": "numeric",
+      "description": "The mean or average value of the aggregated data."
+    },
+	"max": {
+      "value": "",
+      "type": "numeric",
+      "description": "The maximum or highest value of the aggregated data."
+    },
+	"min": {
+      "value": "",
+      "type": "numeric",
+      "description": "The minimum or lowest value of the aggregated data."
+    },
+	"bbox": {
+      "value": "",
+      "type": "array",
+      "description": "Numeric array of the bounding box of the minimum/maximum latitude/longitude of the geography."
+    },
+	"geometry": {
+      "value": "",
+      "type": "object",
+      "description": "Object containing the geographic information of the aggregated data."
+    },
+	"geometry.type": {
+      "value": "\"Polygon\"",
+      "type": "string",
+      "description": "Type of geometry object."
+    },
+	"coordinates": {
+      "value": "",
+      "type": "array",
+      "description": "Numeric array of geographic WGS84 latitude/longitude coordinate pairs."
+    },
+	"bins": {
+      "value": "",
+      "type": "numeric",
+      "description": "Number of binned groups of data. Includes total plus specific geographies."
+    },
+	"aggregations": {
+      "value": "",
+      "type": "numeric",
+      "description": "Number of aggregated results. Includes total plus specific geographies and carriers."
+    },
+	"latest_aggregated": {
+      "value": "YYYMMDD",
+      "type": "date",
+      "description": "Last date of aggregated data."
+    }
+	,
+	"latest_binned": {
+      "value": "YYYMMDD",
+      "type": "string",
+      "description": "Last date of binned data."
+    }
+	,
+	"latest_imported": {
+      "value": "YYYMMDD",
+      "type": "string",
+      "description": "Last date of imported data."
+    }
+  }
+}

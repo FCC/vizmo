@@ -1,0 +1,6 @@
+name: Visualizing Mobile Broadband API Docs
+markdown: kramdown
+pygments: true
+safe: true
+baseurl: /vizmo/
+exclude: []

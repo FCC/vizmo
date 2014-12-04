@@ -1,0 +1,14 @@
+{
+    "apiVersion": "1.0",
+    "apis": [
+        {
+            "description": "Carrier API",
+            "path": "http://fcc.github.io/vizmo/api-docs/carrier.json"
+        },
+		{
+            "description": "Metadata API",
+            "path": "http://fcc.github.io/vizmo/api-docs/meta.json"
+        }
+    ],
+    "swaggerVersion": "1.2"
+}

@@ -1,0 +1,10 @@
+{
+  "fields": {
+    "example_field_name": {
+      "vale": "0-9",
+      "type": "integer",
+      "description": "A code representing the action..."
+    }
+    
+  }
+}
