@@ -1,0 +1,31 @@
+{
+  "name": "vizmo",
+  "version": "0.1.0",
+  "description": "Visualizing Mobile Broadband - Results from the FCC Speed Test",
+  "main": "rest.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/FCC/vizmo.git"
+  },
+  "keywords": [
+    "mobile",
+    "speedtest",
+    "broadband",
+    "visualization"
+  ],
+  "author": "FCC",
+  "license": "-",
+  "bugs": {
+    "url": "https://github.com/FCC/vizmo/issues"
+  },
+  "homepage": "http://vizmo.fcc.gov/",
+  "dependencies": {
+    "js2xmlparser": "~0.1.3",
+    "mongodb": "~1.4.7",
+    "mongojs": "~0.13.0",
+    "restify": "^2.8.1"
+  }
+}
