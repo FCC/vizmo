@@ -13,7 +13,7 @@
 @font-face { font-family: 'icomoon'; src:url('../fonts/icomoon.eot?dyws9g'); src:url('../fonts/icomoon.eot?#iefixdyws9g') format('embedded-opentype'), url('../fonts/icomoon.woff?dyws9g') format('woff'), url('../fonts/icomoon.ttf?dyws9g') format('truetype'), url('../fonts/icomoon.svg?dyws9g#icomoon') format('svg'); font-weight: normal; font-style: normal; }
 body { color: #333; font-family: 'Source Sans Pro', sans-serif; }
 h1 { color: #FFF; font-size: 22px; margin: 10px 0 0; padding: 0 0 0 35px; }
-h2 { color: #F2F2F2; display: block; font-size: 14px; margin: 2px 0 10px 10px; }
+h2 { color: #F2F2F2; display: block; font-size: 14px; margin: 2px 0 10px 45px; }
 a, a:hover, a:focus { color: #FFF; text-decoration: none; }
 label { font-size: 13px; font-weight: normal; }
 /* =============================================================================
