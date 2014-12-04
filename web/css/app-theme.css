@@ -201,7 +201,7 @@ form { position: relative; }
 @media only screen and (min-width : 320px) and (max-width : 479px) {
 .col-full { padding-left: 0; padding-right: 0; }
 h1 { font-size: 16px; margin-top: 12px; }
-h2 { font-size: 14px; }
+h2 { font-size: 11px; white-space: nowrap; }
 header .list-inline > li { padding-right: 0; }
 #map { height: 67vh; min-height: 222px; }
 .map-filters { font-size: 14px; }
