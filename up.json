@@ -1,0 +1,14 @@
+{
+  "apps" : {
+    "name"        : "vizmo",
+    "script"      : "rest.js",
+    "log_date_format"  : "YYYY-MM-DD HH:mm Z",
+    "ignoreWatch" : ["[\\/\\\\]\\./", "node_modules"],
+    "watch"       : "true",
+    "instances"  : "max",
+    "error_file" : "./vizmo.log",
+    "out_file"   : "./vizmo-err.log",
+    "pid_file"   : "./vizmo.pid",
+    "exec_mode"  : "cluster_mode"
+  }
+}

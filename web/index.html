@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<!--
+   ___  ___   ___         _
+  / __\/ __\ / __\ /\   /(_)____ /\/\   ___
+ / _\ / /   / /    \ \ / / |_  //    \ / _ \
+/ /  / /___/ /___   \ V /| |/ // /\/\ \ (_) |
+\/   \____/\____/    \_/ |_/___\/    \/\___/
+
+-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="FCC Visualizing Mobile America">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visualizing Mobile Broadband &laquo; FCC</title>
+<link rel="shortcut icon" href="img/fcc_favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,700,300">
+<link rel="stylesheet" href="css/jquery.dataTables.css">
+<link rel="stylesheet" href="css/mapbox.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/chosen.css">
+<link rel="stylesheet" href="css/app-theme.css">
+
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <script src="js/libs/selectivizr-min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<header>
+    <nav class="container" role="navigation">
+        <div class="row">
+            <div class="col-xs-10 col-sm-9"> <a href="http://www.fcc.gov"><img class="logo" src="img/logo-fcc.png" alt="Go to the Federal Communications Commission homepage at www.fcc.gov" title="Go to the Federal Communications Commission homepage at www.fcc.gov"></a>
+                <h1><a href="/">Visualizing Mobile Broadband</a></h1>
+                <h2>Crowdsourced Results from the FCC Speed Test App</h2>
+            </div>
+            <div class="col-xs-2 col-sm-3"> <a class="pull-right" href="javascript: void(0);" data-toggle="modal" data-target="#modal-aboutfaq"><span class="icon-help-2"></span><span class="sr-only">About/Help</span></a> </div>
+        </div>
+    </nav>
+</header>
+<main class="container">
+    <div class="row">
+        <div class="col-md-7 col-lg-8 col-full">
+            <form id="form-search" action="/">
+                <label for="input-location" class="sr-only">Enter location:</label>
+                <div class="input-group">
+                    <input id="input-location" type="search" class="form-control" placeholder="Enter Location">
+                    <button type="reset" class="close clear-search hide"><span>&times;</span><span class="sr-only">Clear search query</span></button>
+                    <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit" id="input-search"><span class="glyphicon glyphicon-search"></span><span class="sr-only">Search</span></button>
+                    </span> </div>
+                <div class="map-filters collapse">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <h3 id="hd-mapType">Map Type</h3>
+                            <input type="hidden" id="input-mapType" value="speed" />
+                            <ul class="list-mapType list-unstyled">
+                                <li><a id="mapType-speed" href="javascript: void(0);"><span class="glyphicon glyphicon-ok"></span>Speed<span class="sr-only"> map type filter is selected</span></a></li>
+                                <li><a id="mapType-participation" href="javascript: void(0);">Participation</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-8">
+                            <h3 id="hd-carrier">Carriers</h3>
+                            <input type="hidden" id="input-carrier" value="combined" />
+                            <ul class="list-carrier list-unstyled">
+                                <li><a id="carrier-combined" href="javascript: void(0);"><span class="glyphicon glyphicon-ok"></span>Combined<span class="sr-only"> carrier filter is selected</span></a></li>
+                                <li><a id="carrier-other" href="javascript: void(0);">Other</a></li>
+                                <li><a id="carrier-att" href="javascript: void(0);">AT&amp;T</a></li>
+                                <li><a id="carrier-sprint" href="javascript: void(0);">Sprint</a></li>
+                                <li><a id="carrier-tmobile" href="javascript: void(0);">T-Mobile</a></li>
+                                <li><a id="carrier-verizon" href="javascript: void(0);">Verizon</a></li>
+                            </ul>                            
+                        </div>
+                        <input type="hidden" id="input-time" value="total" />
+                    </div>
+                </div>
+                <div class="map-filtersFt"> <a class="link-togFilters" href="javascript: void(0);" data-target=".map-filters" data-toggle="collapse"> <span class="icon-map-layers-2"></span> <strong class="text-togFilters">Filter</strong> <span class="glyphicon glyphicon-chevron-down"></span></a> </div>
+            </form>
+            <div class="map-container">
+                <button class="btn-geoLocation btn btn-default st" type="button" id="btn-geoLocation" data-toggle="tooltip" data-placement="right" title="Get Current Location"><span class="icon-locate-1"></span><span class="sr-only">Get Current Location</span></button>
+                <button class="btn-nationLocation btn btn-default st" type="button" id="btn-nationLocation" data-toggle="tooltip" data-placement="right" title="Nationwide"><span class="icon-nation-1"></span><span class="sr-only">Nationwide</span></button>
+                <div id="map"></div>
+                <div class="map-legend">
+                    <div class="legend">
+                        <div class="map-legend-hd"><span class="icon-legends-2"></span> <span class="map-legend-name" id="map-legend-name">Speed Test Map</span>
+                            <button class="btn-closeLegend btn btn-xs pull-right"><span class="glyphicon glyphicon-remove"></span> <span class="sr-only">Hide legend</span></button>
+                        </div>
+                        <dl class="dl-legend">
+                            <dt><span class="icon-hexagon-fill" id="map-legend-hex-4" style="color: #002b11;"></span></dt>
+                            <dd id="map-legend-text-4">Above 10 mbps</dd>
+                            <dt><span class="icon-hexagon-fill" id="map-legend-hex-3" style="color: #00441b;"></span></dt>
+                            <dd id="map-legend-text-3">5 - 10 mbps</dd>
+                            <dt><span class="icon-hexagon-fill" id="map-legend-hex-2" style="color: #3da659;"></span></dt>
+                            <dd id="map-legend-text-2">1 - 5 mbps</dd>
+                            <dt><span class="icon-hexagon-fill" id="map-legend-hex-1" style="color: #b1dfab; "></span></dt>
+                            <dd id="map-legend-text-1">Below 1 mbps</dd>
+                            <dt><span class="icon-hexagon-outline" id="map-legend-hex-0" style="color: #00441b;"></span></dt>
+                            <dd id="map-legend-text-0">Not Enough Tests</dd>
+                        </dl>
+                        <div class="map-legend-desc" id="map-legend-desc">Median Download Speed</div>
+                    </div>
+                    <button class="btn-legend btn btn-default btn-xs" data-toggle="tooltip" data-placement="right" title="Display&nbsp;Map&nbsp;Legend"><span class="icon-legends-2"></span><span class="sr-only">Legend</span></button>
+                </div>
+            </div>
+			<p class="map-disclaimer">Note: Maps are based on crowdsourcing and may not necessarily reflect carrier coverage area.</p>
+        </div>
+        <div class="col-md-5 col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="sect-hd">
+                        <span class="h2 carrier text-center" id="h-location">Nationwide</span>
+                        <span class="carrier-title-label text-center"><span id="h-carrier">Combined</span> Crowdsourced Results</span> </div>
+                    <ul class="list-stats list-unstyled list-inline">
+                        <li> <span class="icon-download"></span> <span id="main-download-lower"></span>&ndash;<span id="main-download-upper"></span><span class="h3">mbps</span>
+                            <div id="main-sparkbox" class="sparkbox"></div>
+                            <p class="help-block">Download</p>
+                        </li>
+                        <li><span class="icon-upload"></span><span id="main-upload-lower"></span>&ndash; <span id="main-upload-upper"></span> <span class="h5">mbps</span> <span class="help-block">Upload</span></li>
+                        <li><span class="icon-latency"></span><span id="main-latency-lower"></span>&ndash; <span id="main-latency-upper"></span> <span class="h5">ms</span> <span class="help-block">Latency</span></li>
+                    </ul>
+                    <p class="help-stats help-block text-center">Middle 50% Speed Range (25<sup>th</sup> - 75<sup>th</sup> percentile)</p>
+                </div>
+            </div>
+            <section class="sect-carriers">
+                <h3 class="sr-only">Carrier Speeds</h3>
+				<div class="table-actions">
+					<label for="sel-percentile">Percentile:</label>&nbsp;&nbsp;<select id="sel-percentile" data-toggle="chosen">
+						<option value="0">Minimum</option>
+						<option value="25">Lower</option>
+						<option value="50" selected>Median</option>
+						<option value="75">Upper</option>
+						<option value="100">Maximum</option>
+					</select>
+				</div>
+                <table class="table tablers" id="table-carriers" summary="This table contains a list of broadband carriers and has columns for download speed, upload speed, latency, and packet loss.">
+					<thead>
+						<tr>
+							<th>Carrier </th>
+							<th><span class="icon-download" data-toggle="tooltip" data-placement="bottom" title="Download Speed"></span><span class="sr-only">Download Speed</span><span class="sort"></span></th>
+							<th><span class="icon-upload" data-toggle="tooltip" data-placement="bottom" title="Upload Speed"></span><span class="sr-only">Upload Speed</span><span class="sort"></span></th>
+							<th><span class="icon-latency" data-toggle="tooltip" data-placement="bottom" title="Latency"></span><span class="sr-only">Latency</span><span class="sort"></span></th>
+							<th><span class="icon-packet" data-toggle="tooltip" data-placement="bottom" title="Packet Loss"></span><span class="sr-only">Packet Loss</span><span class="sort"></span></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row"><span id="row-combined" class="row-carrier-name">Combined</span><span class="sparkline combined-sparkline" id="" title="Download Speed Range"></span></th>
+							<td><span class="combined-download"></span><span class="help-block">mbps</span></td>
+							<td><span class="combined-upload"></span><span class="help-block">mbps</span></td>
+							<td><span class="combined-latency"></span><span class="help-block">ms</span></td>
+							<td><span class="combined-packet"></span><span class="help-block">%</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><span id="row-att" class="row-carrier-name">AT&amp;T</span><span class="sparkline att-sparkline" id="" title="Download Speed Range"></span></th>
+							<td><span class="att-download"></span><span class="help-block">mbps</span></td>
+							<td><span class="att-upload"></span><span class="help-block">mbps</span></td>
+							<td><span class="att-latency"></span><span class="help-block">ms</span></td>
+							<td><span class="att-packet"></span><span class="help-block">%</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><span id="row-sprint" class="row-carrier-name">Sprint</span><span class="sparkline sprint-sparkline" id="" title="Download Speed Range"></span></th>
+							<td><span class="sprint-download"></span><span class="help-block">mbps</span></td>
+							<td><span class="sprint-upload"></span><span class="help-block">mbps</span></td>
+							<td><span class="sprint-latency"></span><span class="help-block">ms</span></td>
+							<td><span class="sprint-packet"></span><span class="help-block">%</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><span id="row-tmobile" class="row-carrier-name">T-Mobile</span><span class="sparkline tmobile-sparkline" id="" title="Download Speed Range"></span></th>
+							<td><span class="tmobile-download"></span><span class="help-block">mbps</span></td>
+							<td><span class="tmobile-upload"></span><span class="help-block">mbps</span></td>
+							<td><span class="tmobile-latency"></span><span class="help-block">ms</span></td>
+							<td><span class="tmobile-packet"></span><span class="help-block">%</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><span id="row-verizon" class="row-carrier-name">Verizon</span><span class="sparkline verizon-sparkline" id="" title="Download Speed Range"></span></th>
+							<td><span class="verizon-download"></span><span class="help-block">mbps</span></td>
+							<td><span class="verizon-upload"></span><span class="help-block">mbps</span></td>
+							<td><span class="verizon-latency"></span><span class="help-block">ms</span></td>
+							<td><span class="verizon-packet"></span><span class="help-block">%</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><span id="row-other" class="row-carrier-name" >Other</span><span class="sparkline other-sparkline" id="" title="Download Speed Range"></span></th>
+							<td><span class="other-download"></span><span class="help-block">mbps</span></td>
+							<td><span class="other-upload"></span><span class="help-block">mbps</span></td>
+							<td><span class="other-latency"></span><span class="help-block">ms</span></td>
+							<td><span class="other-packet"></span><span class="help-block">%</span></td>
+						</tr>
+					</tbody>
+				</table>
+            </section>
+            <div class="table-foot-text row">
+                <div class="col-xs-8 col-sm-7 col-md-7"> <span id="dateUpdated"></span> </div>
+                <div class="col-sm-5 col-md-5 text-right"> <span>&ndash;&ndash;</span> <em>Not Enough Tests</em> </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-aboutfaq" class="modal fade" aria-labelledby="hd-about" role="dialog" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 id="hd-about" class="modal-title">Visualizing Mobile Broadband</h4>
+                    <ul class="nav nav-pills" role="tablist" id="tab-list">
+                        <li class="active"><a href="#tab-about" role="tab" data-toggle="tab">About</a></li>
+                        <li><a href="#tab-faq" role="tab" data-toggle="tab"><abbr title="Frequently Asked Questions">FAQ</abbr></a></li>
+                    </ul>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab-about">
+							<h4>About</h4>
+							<p>
+								This visualization displays results from the FCC Speed Test app which currently runs on Android and iPhone mobile devices.							
+								This app allows users to measure their mobile broadband performance and voluntarily report this data to the FCC.
+							</p>
+							<h4>Data</h4>
+							<p>
+								The data collected includes both upload and download speeds, latency, and packet loss. 
+								The map displays carrier performance based on speed and participation.
+							</p>
+							<h4>Crowdsourcing</h4>
+							<p>
+								These crowdsourced maps change every day as more volunteers participate in the program. 
+								To contribute, get the FCC Speed Test app from the <a target="_blank" href="https://play.google.com/store/apps/details?id=com.samknows.fcc" class="und">Google Play</a> or <a target="_blank" href="https://itunes.apple.com/us/app/fcc-speed-test/id794322383" class="und">iTunes App Store</a>.
+							</p>
+							<h4>Standards</h4>
+							<p>
+								These maps show the participation and results in areas where enough network users voluntarily downloaded and ran the FCC's speed test application to satisfy the FCC's standards (at least 10 completed test results on at least two devices in a hexagon) for being shown on the map and, consequently, DO NOT necessarily reflect providers' coverage. 
+								The results of tests the FCC receives are aggregated over a period of a year, and so the maps also do not reflect differences in speeds over time, for device technologies (e.g., 3G or 4G, CDMA or LTE) or for the various brands of Android devices and types of iPhones.
+								For the actual geographic coverage of service providers' networks, please consult the providers' online coverage maps. 
+							</p>
+							<h4>Notice</h4>
+							<p>
+								Service offerings vary in ways that can lead to differences between the speeds depicted, and the experiences that particular customers will have.
+								While some service providers apply additional charges when a user exceeds allowable data thresholds during a billing cycle, other service providers may prevent additional data use for the remainder of the billing period. 
+								Some service providers may provide unlimited data, but at reduced speeds for the remainder of a billing cycle or until the customer purchases an additional high speed data allowance.
+								In some cases, carriers exclude data used by the FCC speed application from their high speed data limit to ensure that data used to produce the network performance map reflects the user experience available to consumers.
+								In such cases, the individual results for a user will not reflect the reduced data speeds imposed pursuant to the customer's service plan.
+							</p>
+							<h4>Learn More</h4>
+							<p>
+								<ul>
+									<li><a target="_blank" href="http://www.fcc.gov/measuring-broadband-america/mobile">Measuring Broadband America Mobile Broadband Services</a></li>
+									<li><a target="_blank" href="http://www.fcc.gov/measuring-broadband-america/mobile/technical-summary">Mobile Broadband Methodology Technical Summary</a></li>
+								</ul>
+							</p>
+							<h4>For Developers</h4>
+							<p>
+								Create your own visualization or application using the API.  
+								View API documentation: <a target="_blank" href="http://fcc.github.io/vizmo/docs/" title="http://fcc.github.io/vizmo/docs/">http://fcc.github.io/vizmo/docs/</a>
+							</p>
+							<h4>Statistics</h4>
+							<p>
+								<ul>
+									<li>Total Tests: <span id="stats-total-tests"></span></li>
+									<li>Total Hexagons: <span id="stats-total-bins"></span></li>
+									<li>Last Updated: <span id="stats-last-updated"></span></li>
+								</ul>
+							</p>
+                        </div>
+                        <div id="tab-faq" class="tab-pane">
+						<h4>Map Questions</h4>
+                        <ul class="list-faq list-unstyled">						
+                        <li>
+                            <p id="q1"><a href="#" data-toggle="collapse" data-target="#a1">What does this map represent?</a></p>
+                            <p id="a1" class="collapse">The map is a visual representation of the data collected by the FCC Speed Test app, which measures current speeds and connection quality (upload speed, download speed, latency, packet loss). The data from that app has been aggregated and displayed here for public use.</p>
+                        </li>
+                        <li>
+                            <p id="q2"><a href="#" data-toggle="collapse" data-target="#a2">Does this map display coverage?</a></p>
+                            <p id="a2" class="collapse">No, maps are based on crowdsourced results from the FCC Speed Test app and may not necessarily reflect carrier coverage area.. </p>
+                        </li>
+                        <li>
+                            <p><a href="#" data-toggle="collapse" data-target="#a3">How is the Combined value calculated?</a></p>
+                            <p id="a3" class="collapse">The data is an aggregation of the collection of individual tests, not an average of individual carriers.</p>
+                        </li>
+                        <li>
+                            <p><a href="#" data-toggle="collapse" data-target="#a4">How do I change maps or view different carriers?</a></p>
+                            <p id="a4" class="collapse">You can view different maps either by using the search bar or by clicking on the <img border=0 src="img/faq-1.png" alt="Filter dropdown">. Using the filter, you can drill down by Map Type and Carrier. There are two Map Types available: (a) Speed (which compares the performance data of the different carriers as well as provides the aggregated results) and (b) Participation (which provides a count of the number of tests per carrier within a mapped hexagon).</p>
+                        </li>
+                        <li>
+                            <p><a href="#" data-toggle="collapse" data-target="#a5">What criteria can I use to search?</a></p>
+                            <p id="a5" class="collapse">The Visualizing Mobile Broadband Map allows you to search by city, state, zip code, latitude/longitude coordinates, and street address.</p>
+                        </li>
+                        <li>
+                            <p><a href="#" data-toggle="collapse" data-target="#a6">Why are the colors of the map different?</a></p>
+                            <p id="a6" class="collapse">The map uses a different color for each provider (<font color="green">Combined</font>; AT&amp;T; <font color="#ccc">Sprint</font>; <font color="pink">T-Mobile</font>; <font color="red">Verizon</font>; and <font color="orange">Other</font>).</p>
+                        </li>
+                        <li>
+                            <p><a href="#" data-toggle="collapse" data-target="#a7">Can I see the results of two carriers?</a></p>
+                            <p id="a7" class="collapse">Currently the map only shows one carrier at a time or all carriers combined.</p>
+                        </li>
+                        <li>
+                            <p><a href="#" data-toggle="collapse" data-target="#a8">How do I search my current location?</a></p>
+                            <p id="a8" class="collapse">In order to see your current location, you must first ensure that you are using a modern web browser. Then click on the <img border=0 src="img/faq-2.png" alt="Current Location icon"> and allow </url> to access your current location on your web browser.</p>
+                        </li>
+                        <li>
+                            <p><a href="#" data-toggle="collapse" data-target="#a9">How do I access the legend on the mobile site?</a></p>
+                            <p id="a9" class="collapse">The <img border=0 src="img/faq-3.png" alt="legend"> icon is located in the lower left hand corner of the screen. On the mobile version, the legend is hidden to provide enough space in the window. In order to expand the legend on the mobile site, click on the legend icon. </p>
+                        </li>
+                        <li>
+                            <p><a href="#" data-toggle="collapse" data-target="#a10">Why does my location have insufficient data?</a></p>
+                            <p id="a10" class="collapse">The  map does not display data from an area with less than 10 independent tests. This  data must come from multiple carriers and/or multiple devices in order to be displayed. Insufficient data is marked as --. For a better outcome in your location, you  may download the app (for <a target="_blank" href="https://play.google.com/store/apps/details?id=com.samknows.fcc&amp;hl=en">Android</a> and <a target="_blank" href="https://itunes.apple.com/us/app/fcc-speed-test/id794322383?mt=8">iPhone</a>) and add your results.</p>
+                        </li>
+                        <li>
+                            <p><a href="#" data-toggle="collapse" data-target="#a12">How are speed tests aggregated?</a></p>
+                            <p id="a12" class="collapse">Data are aggregated into hexagons of various sizes, depending on the density of available tests and zoom level. As you zoom in the hexagons become smaller to show more detail. Each hexagon represents at least ten speed tests from two different devices to ensure privacy.</p>
+                        </li>
+                        <li>
+                            <p><a href="#" data-toggle="collapse" data-target="#a13">Why hexagons?</a></p>
+                            <p id="a13" class="collapse">Hexagons provide an interlocking network of geographies. Binning the data in hexagons avoids any influence by outside data elements (such as population) that might obscure patterns in the data. To learn more about hex binning, go to <a target="_blank" href="http://indiemaps.com/blog/2011/10/hexbins/">http://indiemaps.com/blog/2011/10/hexbins/</a></p>
+                        </li>
+                        <li>
+                            <p><a href="#" data-toggle="collapse" data-target="#a14">What happens when I click on the map?</a></p>
+                            <p id="a14" class="collapse">When you click on a hexagon, you are viewing that region’s data. The position of your cursor as you click the map will determine what city is displayed, but the data within that hexagon will give you the value for the entire hexagon.</p>
+                        </li>
+                        <li>
+                            <p><a href="#" data-toggle="collapse" data-target="#a15">When I search for a specific address, am I only seeing the information of that address?</a></p>
+                            <p id="a15" class="collapse">No. When you search for an area, you are seeing the results of the entire hexagon that includes the address. The search result will display the hexagon located at the center of your search.</p>
+                        </li>
+
+                        </ul>
+                        <br/>
+                        <h4>Data Questions</h4>
+                        <ul class="list-faq list-unstyled">
+                            <li>
+                                <p><a href="#" data-toggle="collapse" data-target="#a17">How recent is this data?</a></p>
+                                <p id="a17" class="collapse">The data is limited to one year of tests. This data is updated daily based on tests from the past 365 days. </p>
+                            </li>
+                            <li>
+                                <p><a href="#" data-toggle="collapse" data-target="#a18">What do the range values represent?</a></p>
+                                <p id="a18" class="collapse">This is the range that typical users experienced. The range display is the middle 50 percent of all tests, from the 25th percentile to the 75th percentile. </p>
+                            </li>
+                            <li>
+                                <p><a href="#" data-toggle="collapse" data-target="#a19">What is mbps and ms?</a></p>
+                                <p id="a19" class="collapse">The mpbs represents the upload and downloads speeds in megabits per second, and ms represents the latency in milliseconds. The higher the mbps, the faster the internet access is. The lower the ms and/or packet loss, the better the connection.</p>
+                            </li>
+                            <li>
+                                <p><a href="#" data-toggle="collapse" data-target="#a20">What is latency and packet loss?</a></p>
+                                <p id="a20" class="collapse">Latency is the round trip time (in milliseconds) of small UDP packets sent from the handset to a target test node and back. Each packet consists of an 8-byte sequence number and an 8-byte timestamp. If a packet is not received back within two seconds of sending, it is treated as lost. The test records the number of packets sent, the mean, minimum and maximum round trip time, and the total number of packets sent and received.  Packet loss refers to the percentage of packets that were received back within two seconds after they were sent from the handset. </p>
+                            </li>
+                            <li>
+                                <p><a href="#" data-toggle="collapse" data-target="#a21">Is this data I can use myself?</a></p>
+                                <p id="a21" class="collapse">Yes. The data displayed here is for the general public to use for any purpose. You may use the data through our API found <a target="_blank" href="http://fcc.github.io/vizmo/docs/" title="http://fcc.github.io/vizmo/docs/">here</a>.</p>
+                            </li>
+                            <li>
+                                <p><a href="#" data-toggle="collapse" data-target="#a22">What does the bar under the median download speeds represent?</a></p>
+                                <p id="a22" class="collapse">This bar, or <a href="http://en.wikipedia.org/wiki/Box_plot">box plot</a>,  is a visual representation of the median numerical value for this data point.  By directing your cursor over the box plot you can view the Lower Quartile, Median, Upper Quartile, Minimum, and Maximum for the selected hexagon. If no hexagon is selected, the boxplot shows the national average.</p>
+                            </li>
+                            <li>
+                                <p><a href="#" data-toggle="collapse" data-target="#a23">What do the numbers in the carrier table represent?</a></p>
+                                <p id="a23" class="collapse">These numbers are crowdsourced results for your selected location. <strong>Download Speeds</strong> are represented by the <img border=0 src="img/faq-4.png" alt="Download"> icon; <strong>Upload Speeds</strong> are represented by the <img border=0 src="img/faq-5.png" alt="Upload"> icon; <strong>Latency</strong> is represented by the <img border=0 src="img/faq-7.png" alt="Latency"> icon; and <strong>Packet Loss</strong> is represented by the <img border=0 src="img/faq-6.png" alt="Packet Loss"> icon. </p>
+                            </li>
+                            <li>
+                                <p><a href="#" data-toggle="collapse" data-target="#a24">Can I sort the data?</a></p>
+                                <p id="a24" class="collapse">Yes, users can sort the data table by clicking on the up/down icons on each column.</p>
+                            </li>
+                            <li>
+                                <p><a href="#" data-toggle="collapse" data-target="#a25">How do I switch between Percentiles?</a></p>
+                                <p id="a25" class="collapse">You can view the download speeds, upload speeds, latency, and packet loss for the <strong>Median</strong> (50th percentile), <strong>Upper</strong> (75th percentile), <strong>Lower</strong> (25th percentile), <strong>Minimum</strong> (0th percentile), and <strong>Maximum</strong> (100th percentile). You can change this by using the Percentile drop-down menu.</p>
+                            </li>
+                            <li>
+                                <p><a href="#" data-toggle="collapse" data-target="#a26">What do the bars underneath the carriers represent?</a></p>
+                                <p id="a26" class="collapse">These bars represent the minimum and maximum download speeds of a given carrier, showing the percentiles represented in the box plot from the table above. </p>
+                            </li>
+                            <li>
+                                <p><a href="#" data-toggle="collapse" data-target="#a27">Does the FCC collect personal data?</a></p>
+                                <p id="a27" class="collapse">The FCC does not store personally identifiable data or cookies in either the FCC Speed Test app or the website.</p>
+                            </li>
+                        </ul>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-6 col-lg-6"> <span><i>FCC Speed Test App:</i></span> &nbsp; <span><a target="_blank" href="https://itunes.apple.com/us/app/fcc-speed-test/id794322383" class="und">iPhone/iPad</a><span class="bull">&bull;</span><a target="_blank" href="https://play.google.com/store/apps/details?id=com.samknows.fcc" class="und">Android</a></span> </div>
+            <div class="col-sm-6 col-md-6 col-lg-6">
+                <div class="pull-right"> <a data-target="#modal-aboutfaq" data-toggle="modal" data-tab="about" href="javascript: void(0);" class="und">About</a> <span class="bull">&bull;</span> <a data-target="#modal-aboutfaq" data-toggle="modal" data-tab="faq" href="javascript: void(0);" class="und">FAQ</a> <span class="bull">&bull;</span> <a target="_blank" href="http://fcc.github.io/vizmo/docs/" class="und">Developers</a> <span class="bull">&bull;</span> <a target="_blank" href="http://www.fcc.gov/encyclopedia/privacy-policy" class="und">Privacy Policy</a></div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+<script src="//api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js"></script>
+<script src="//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-hash/v0.2.1/leaflet-hash.js"></script>
+<script src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jcarousel/0.3.1/jquery.jcarousel.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jcarousel/0.3.1/jquery.jcarousel-control.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jcarousel/0.3.1/jquery.jcarousel-core.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.4/jquery.touchSwipe.min.js"></script>
+<script src="js/libs/bootstrap.min.js"></script>
+<script src="js/libs/chosen.jquery.js"></script>
+<script src="js/libs/viewport-units-buggyfill.js"></script>
+<script src="js/libs/jquery.sparkline.custom.min.js"></script>
+<script src="js/app.js"></script>
+<script>
+	window.viewportUnitsBuggyfill.init();
+</script>
+<script src="http://www.fcc.gov/sites/all/themes/fcc/js/ga-event-tracking.js"></script>
+</body>
+</html>

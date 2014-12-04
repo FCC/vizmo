@@ -1,0 +1,53 @@
+{
+    "apiVersion": "1.0",
+    "apis": [
+        {
+            "operations": [
+                {
+                    "method": "GET",
+                    "nickname": "getMeta",
+					"parameters": [
+						{
+                            "allowableValues": {
+                                "valueType": "LIST",
+                                "values": [
+                                    "json",
+									"jsonp",
+                                    "xml"                                   
+                                ]
+                            },
+                            "dataType": "string",
+                            "description": "File format",
+                            "name": "file",
+                            "paramType": "path",
+                            "required": true
+                        },
+						{
+                            "dataType": "string",
+                            "description": "Callback",
+                            "name": "callback",
+                            "paramType": "query",
+                            "required": false
+                        }		
+                    ],
+                    "produces": [
+                        "application/json",
+                        "application/javascript",
+                        "application/xml"
+                    ],
+                    "summary": "Get all available metadata."
+                }
+            ],
+            "path": "/api/meta.{file}"
+        }
+   ],
+    "basePath": "http://ltstndj-web01a:8080",
+    "models": {},
+    "produces": [
+        "application/json",
+        "application/javascript",
+        "application/xml"
+    ],
+    "resourcePath": "/api",
+    "swaggerVersion": "1.2"
+}
