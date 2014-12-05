@@ -664,7 +664,7 @@ function loadData(lat, lon, type) {
 	})
 	.fail(function() {
 			
-		map.setView([lat, lon]);	
+		//map.setView([lat, lon]);	
 		
 		$('.map-filters').before(createAlert('Not enough tests in this location.'));
 		$('#alert-box').focus();
@@ -931,87 +931,6 @@ $('#input-percentile, #sel-percentile').change(function( event ) {
 	return false;
 });
 
-$(function() {
-
-	var jcarousel = $('.jcarousel');
-
-	jcarousel
-		.on('jcarousel:reload jcarousel:create', function () {
-			var width = jcarousel.innerWidth();
-			/*
-			if (width >= 768) {
-				width = width / 3;
-			} 
-			else if (width >= 480) {
-				width = width / 2;
-			}
-			*/
-
-			jcarousel.jcarousel('items').css('width', width + 'px');
-		})
-		.jcarousel({
-			wrap: 'circular'
-		});
-
-	$('.jcarousel-control-prev')
-		.jcarouselControl({
-			target: '-=1'
-		});
-
-	$('.jcarousel-control-next')
-		.jcarouselControl({
-			target: '+=1'
-		});
-
-	$('.jcarousel-pagination')
-		.on('jcarouselpagination:active', 'a', function() {
-			$(this).addClass('active');
-		})
-		.on('jcarouselpagination:inactive', 'a', function() {
-			$(this).removeClass('active');
-		})
-		.on('click', function(e) {
-			e.preventDefault();
-		})
-		.jcarouselPagination({
-			perPage: 1,
-			item: function(page) {
-				return '<a href="#' + page + '">' + page + '</a>';
-			}
-		});
-	
-	
-	/*jcarousel.swipe({
-		swipeLeft: function(event, direction, distance, duration, fingerCount) {   
-			jcarousel.jcarousel('scroll', '+=1');
-		},
-		swipeRight: function(event, direction, distance, duration, fingerCount) {
-			jcarousel.jcarousel('scroll', '-=1');
-		}
-	});*/
-	
-	jcarousel.on('jcarousel:animateend', function(event, carousel) {
-        var currentFirstItem = $(this).jcarousel('first').attr('id');
-		//console.log('currentFirstItem : ' + currentFirstItem );
-		
-		if (currentFirstItem == 'carousel-0') {
-			$('#metric-name').text( 'Minimum' );
-		}
-		else if (currentFirstItem == 'carousel-25') {
-			$('#metric-name').text( 'Lower' );
-		}
-		else if (currentFirstItem == 'carousel-50') {
-			$('#metric-name').text( 'Median' );
-		}
-		else if (currentFirstItem == 'carousel-75') {
-			$('#metric-name').text( 'Upper' );
-		}
-		else if (currentFirstItem == 'carousel-100') {
-			$('#metric-name').text( 'Maximum' );
-		}				
-    });	
-});
-
 $('.sparkline').tooltip({
 	'container':'body', 
 	'placement': function(ele) {
@@ -1032,7 +951,6 @@ if ('ontouchstart' in document.documentElement) {
 		$(this).tooltip('toggle').click();
 	});
 } 
-
 
 $('.clear-search').on('click', function() {
 	$(this).addClass('hide');
