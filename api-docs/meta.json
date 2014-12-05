@@ -41,7 +41,7 @@
             "path": "/api/meta.{file}"
         }
    ],
-    "basePath": "http://vizmo.fcc.gov/api",
+    "basePath": "http://vizmo.fcc.gov",
     "models": {},
     "produces": [
         "application/json",
