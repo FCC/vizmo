@@ -41,7 +41,7 @@
             "path": "/api/meta.{file}"
         }
    ],
-    "basePath": "http://ltstndj-web01a:8080",
+    "basePath": "http://vizmo.fcc.gov/api/",
     "models": {},
     "produces": [
         "application/json",
