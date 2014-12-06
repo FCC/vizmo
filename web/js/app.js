@@ -261,10 +261,10 @@ function changeLegend(carrier, mapType) {
 		$( '#map-legend-name' ).text( 'Speed Test Map' );
 		$( '#map-legend-desc' ).text( 'Median Download Speed' );	
 		
-		$( '#map-legend-text-4' ).text( 'Above 10 mbps' );	
-		$( '#map-legend-text-3' ).text( '5 - 10 mbps' );	
-		$( '#map-legend-text-2' ).text( '1 - 5 mbps' );	
-		$( '#map-legend-text-1' ).text( 'Below 1 mbps' );	
+		$( '#map-legend-text-4' ).text( 'Above 10 Mbps' );	
+		$( '#map-legend-text-3' ).text( '5 - 10 Mbps' );	
+		$( '#map-legend-text-2' ).text( '1 - 5 Mbps' );	
+		$( '#map-legend-text-1' ).text( 'Below 1 Mbps' );	
 		$( '#map-legend-text-0' ).text( 'Not Enough Tests' );
 	}
 	
@@ -326,13 +326,13 @@ function setMeta() {
 		
 		var last_updated_date = new Date(last_updated_year, last_updated_month, last_updated_day)
 
-		//var total_bins = data.bins.total;
-		//var total_tests = data.aggregations.total;
+		var total_bins = data.bins.total;
+		var total_tests = data.aggregations.total;
 			
 		$( '#dateUpdated' ).text( 'Updated ' + last_updated_date.toLocaleDateString() );
 		
-		//$( '#stats-total-bins' ).text( total_bins.toLocaleString() );
-		//$( '#stats-total-tests' ).text( total_tests.toLocaleString() );
+		$( '#stats-total-bins' ).text( total_bins.toLocaleString() );
+		$( '#stats-total-tests' ).text( total_tests.toLocaleString() );
 		$( '#stats-last-updated' ).text( last_updated_date.toLocaleDateString() );		
 	});	
 }
@@ -497,7 +497,7 @@ function updateData(){
 				$('#table-carriers').find('.'+ val_carrier +'-sparkline').sparkline(boxplot_arr, {
 					width: '80px', height: '24px',
 					barWidth: 11, barSpacing: 4, barColor: color_carrier, //barColor: '#777777', 
-					chartRangeMin: 0, chartRangeMax: 50, tooltipSuffix: '&nbsp;mbps',
+					chartRangeMin: 0, chartRangeMax: 50, tooltipSuffix: '&nbsp;Mbps',
 					type: 'bar'});					
 			}			
 		//}		
