@@ -8,7 +8,7 @@
 */
 
 // Config
-var appConfig = require('./appConfig');
+var appConfig = require('../config/appConfig');
 var configInfo = new appConfig();
 
 // Require
@@ -45,7 +45,7 @@ var db = mongojs(conn, ['db_mmba']);
 // DB Collections
 var agg = db.collection('aggregations');
 var bin = db.collection('geo.bins');
-var meta = db.collection('meta');
+var meta = db.collection('meta.public');
 var log_api = db.collection('log.api');
 var log_web = db.collection('log.web');
 
@@ -489,95 +489,72 @@ function getMeta(req, res, next){
 	
 	console.log('fileName : ' + fileName);	 
 			
-	var m_find, m_proj;
-	
+	var m_find, m_proj;	
 	
 	if ((fileName == 'bins') || (fileName == 'bin') || (fileName == 'hex')){
 		m_find = {'type' : 'bins'};
-		m_proj = {'type': true, 'hex5k':true, 'hex10k': true, 'hex25k': true};
+		//m_proj = {'type': true, 'hex5k':true, 'hex10k': true, 'hex25k': true};
 	}
 	else if ((fileName == 'agg') || (fileName == 'aggregation') || (fileName == 'aggregations')){
 		m_find = {'type' : 'aggregations'};
-		m_proj = {'type': true, 'total': true, 'geo.hex5k.total.total': true, 'geo.hex10k.total.total': true, 'geo.hex25k.total.total': true};
+		//m_proj = {'type': true, 'total': true, 'geo.hex5k.total.total': true, 'geo.hex10k.total.total': true, 'geo.hex25k.total.total': true};
 	}
 	else if ((fileName == 'dates') || (fileName == 'date')){
 		m_find = {'type' : 'dates'};
-		m_proj = {'type': true, 'latest_aggregated_date':true, 'latest_binned_date': true, 'latest_imported_date': true};
+		//m_proj = {'type': true, 'latest_aggregated_date':true, 'latest_binned_date': true, 'latest_imported_date': true};
 	}
 	else {
 		m_find = {$or: [{'type' : 'bins'}, {'type' : 'aggregations'}, {'type' : 'dates'}]};
-		m_proj = {'type': true, 'hex5k': true, 'hex10k': true, 'hex25k': true, 'total': true, 'geo.hex5k.total.total': true, 'geo.hex10k.total.total': true, 'geo.hex25k.total.total': true, 'latest_aggregated_date':true, 'latest_binned_date': true, 'latest_imported_date': true};
+		//m_proj = {'type': true, 'hex5k': true, 'hex10k': true, 'hex25k': true, 'total': true, 'geo.hex5k.total.total': true, 'geo.hex10k.total.total': true, 'geo.hex25k.total.total': true, 'latest_aggregated_date':true, 'latest_binned_date': true, 'latest_imported_date': true};
 	}
 	
 	console.log( 'm_find : '+ JSON.stringify( m_find  ) +'' );
-	console.log( 'm_proj : '+ JSON.stringify( m_proj  ) +'' );
+	//console.log( 'm_proj : '+ JSON.stringify( m_proj  ) +'' );
 	
-	meta.find(m_find, m_proj, function(err , doc){
+	meta.find(m_find, function(err , doc){
 	
 		console.log('getMeta query sent');
 
 		if (doc) {
 			console.log('getMeta doc success');
 			
-			console.log( 'doc : '+ JSON.stringify( doc  ) +' ' );
+			//console.log( 'doc : '+ JSON.stringify( doc  ) +' ' );
 			
-			if (doc.length > 0) {
+			if (doc.length > 0) {				
+				
+				/*
+				for (var i = 0; i < doc.length; i++) {				
+					delete doc[i]._id;
+				}		
+				var out = doc;
+				*/				
 
 				var out = {};
-
-				//var dates_arr = doc[0].dates;
-
-				//dates_arr.sort();
-				//dates_arr.reverse();
-
-				//var last_date = dates_arr[0];
 				
 				for (var i = 0; i < doc.length; i++) {
 
 					if (doc[i].type == 'bins') {
 						out.bins = {
-							'total' : doc[i].hex5k + doc[i].hex10k + doc[i].hex25k,
-							'geo': {
-								'hex5k' : doc[i].hex5k,
-								'hex10k' : doc[i].hex10k,
-								'hex25k' : doc[i].hex25k
-							}
+							'total' : doc[i].total,
+							'geo': doc[i].geo,
+							'carrier' : doc[i].carrier
 						};
 					}
 					if (doc[i].type == 'aggregations') {
-						//out.aggregations.total = doc[i].total.total;
 						out.aggregations = {
-							'total' : doc[i].total.total,
-							'geo': {
-								'hex5k' : doc[i].geo.hex5k.total.total,
-								'hex10k' : doc[i].geo.hex10k.total.total,
-								'hex25k' : doc[i].geo.hex25k.total.total
-							},
-							'carrier' : {
-								'combined' : doc[i].total.combined,
-								'att' : doc[i].total.att,
-								'sprint' : doc[i].total.sprint,
-								'tmobile' : doc[i].total.tmobile,
-								'verizon' : doc[i].total.verizon,
-								'other' : doc[i].total.other
-							}
+							'total' : doc[i].total,
+							'geo': doc[i].geo,
+							'carrier' : doc[i].carrier
 						};						
 					}
 					if (doc[i].type == 'dates') {
 						out.dates = {								
-							'latest_aggregated' : doc[i].latest_aggregated_date,
-							'latest_binned' : doc[i].latest_binned_date,
-							'latest_imported' : doc[i].latest_imported_date
+							'latest_aggregated' : doc[i].latest_aggregated,
+							'latest_binned' : doc[i].latest_binned,
+							'latest_imported' : doc[i].latest_imported
 						};	
 					}
-				}	
-				
-				/*
-				out = {
-					'meta_type' : 'last_updated',
-					'meta_value' : '06041979'
-				};
-				*/
+				}
 
 				// convert to xml with js2xmlparser
 				if (fileExt == '.xml') {
