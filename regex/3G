@@ -1,0 +1,8 @@
+^(\w*)EVDO(\w*)$
+^(\w*)EVDO rev 0(\w*)$
+^(\w*)EVDO rev A(\w*)$
+^(\w*)HSUPA(\w*)$
+^(\w*)HSDPA(\w*)$
+^(\w*)HSPA(\w*)$
+^(\w*)UMTS(\w*)$
+^(\w*)eHRPD(\w*)$
