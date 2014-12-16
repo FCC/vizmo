@@ -261,10 +261,10 @@ function changeLegend(carrier, mapType) {
 		$( '#map-legend-name' ).text( 'Speed Test Map' );
 		$( '#map-legend-desc' ).text( 'Median Download Speed' );	
 		
-		$( '#map-legend-text-4' ).text( 'Above 10 mbps' );	
-		$( '#map-legend-text-3' ).text( '5 - 10 mbps' );	
-		$( '#map-legend-text-2' ).text( '1 - 5 mbps' );	
-		$( '#map-legend-text-1' ).text( 'Below 1 mbps' );	
+		$( '#map-legend-text-4' ).text( 'Above 10 Mbps' );	
+		$( '#map-legend-text-3' ).text( '5 - 10 Mbps' );	
+		$( '#map-legend-text-2' ).text( '1 - 5 Mbps' );	
+		$( '#map-legend-text-1' ).text( 'Below 1 Mbps' );	
 		$( '#map-legend-text-0' ).text( 'Not Enough Tests' );
 	}
 	
@@ -326,13 +326,13 @@ function setMeta() {
 		
 		var last_updated_date = new Date(last_updated_year, last_updated_month, last_updated_day)
 
-		//var total_bins = data.bins.total;
-		//var total_tests = data.aggregations.total;
+		var total_bins = data.bins.total;
+		var total_tests = data.aggregations.total;
 			
 		$( '#dateUpdated' ).text( 'Updated ' + last_updated_date.toLocaleDateString() );
 		
-		//$( '#stats-total-bins' ).text( total_bins.toLocaleString() );
-		//$( '#stats-total-tests' ).text( total_tests.toLocaleString() );
+		$( '#stats-total-bins' ).text( total_bins.toLocaleString() );
+		$( '#stats-total-tests' ).text( total_tests.toLocaleString() );
 		$( '#stats-last-updated' ).text( last_updated_date.toLocaleDateString() );		
 	});	
 }
@@ -497,7 +497,7 @@ function updateData(){
 				$('#table-carriers').find('.'+ val_carrier +'-sparkline').sparkline(boxplot_arr, {
 					width: '80px', height: '24px',
 					barWidth: 11, barSpacing: 4, barColor: color_carrier, //barColor: '#777777', 
-					chartRangeMin: 0, chartRangeMax: 50, tooltipSuffix: '&nbsp;mbps',
+					chartRangeMin: 0, chartRangeMax: 50, tooltipSuffix: '&nbsp;Mbps',
 					type: 'bar'});					
 			}			
 		//}		
@@ -664,7 +664,7 @@ function loadData(lat, lon, type) {
 	})
 	.fail(function() {
 			
-		map.setView([lat, lon]);	
+		//map.setView([lat, lon]);	
 		
 		$('.map-filters').before(createAlert('Not enough tests in this location.'));
 		$('#alert-box').focus();
@@ -931,87 +931,6 @@ $('#input-percentile, #sel-percentile').change(function( event ) {
 	return false;
 });
 
-$(function() {
-
-	var jcarousel = $('.jcarousel');
-
-	jcarousel
-		.on('jcarousel:reload jcarousel:create', function () {
-			var width = jcarousel.innerWidth();
-			/*
-			if (width >= 768) {
-				width = width / 3;
-			} 
-			else if (width >= 480) {
-				width = width / 2;
-			}
-			*/
-
-			jcarousel.jcarousel('items').css('width', width + 'px');
-		})
-		.jcarousel({
-			wrap: 'circular'
-		});
-
-	$('.jcarousel-control-prev')
-		.jcarouselControl({
-			target: '-=1'
-		});
-
-	$('.jcarousel-control-next')
-		.jcarouselControl({
-			target: '+=1'
-		});
-
-	$('.jcarousel-pagination')
-		.on('jcarouselpagination:active', 'a', function() {
-			$(this).addClass('active');
-		})
-		.on('jcarouselpagination:inactive', 'a', function() {
-			$(this).removeClass('active');
-		})
-		.on('click', function(e) {
-			e.preventDefault();
-		})
-		.jcarouselPagination({
-			perPage: 1,
-			item: function(page) {
-				return '<a href="#' + page + '">' + page + '</a>';
-			}
-		});
-	
-	
-	/*jcarousel.swipe({
-		swipeLeft: function(event, direction, distance, duration, fingerCount) {   
-			jcarousel.jcarousel('scroll', '+=1');
-		},
-		swipeRight: function(event, direction, distance, duration, fingerCount) {
-			jcarousel.jcarousel('scroll', '-=1');
-		}
-	});*/
-	
-	jcarousel.on('jcarousel:animateend', function(event, carousel) {
-        var currentFirstItem = $(this).jcarousel('first').attr('id');
-		//console.log('currentFirstItem : ' + currentFirstItem );
-		
-		if (currentFirstItem == 'carousel-0') {
-			$('#metric-name').text( 'Minimum' );
-		}
-		else if (currentFirstItem == 'carousel-25') {
-			$('#metric-name').text( 'Lower' );
-		}
-		else if (currentFirstItem == 'carousel-50') {
-			$('#metric-name').text( 'Median' );
-		}
-		else if (currentFirstItem == 'carousel-75') {
-			$('#metric-name').text( 'Upper' );
-		}
-		else if (currentFirstItem == 'carousel-100') {
-			$('#metric-name').text( 'Maximum' );
-		}				
-    });	
-});
-
 $('.sparkline').tooltip({
 	'container':'body', 
 	'placement': function(ele) {
@@ -1032,7 +951,6 @@ if ('ontouchstart' in document.documentElement) {
 		$(this).tooltip('toggle').click();
 	});
 } 
-
 
 $('.clear-search').on('click', function() {
 	$(this).addClass('hide');

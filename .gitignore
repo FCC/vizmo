@@ -4,8 +4,6 @@ node.exe
 node*
 npm
 npm.cmd
-test*
-rest*
 appConfig.js
 /appConfig.js
 config
