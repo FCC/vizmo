@@ -1,6 +1,6 @@
 VizMo - Visualizing Mobile Broadband
 =============
-## Documentation  ## 
+## Documentation
 
 This branch will be used to store Git, Node.js, Python, and various other documentation.
 
