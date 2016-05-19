@@ -2,15 +2,18 @@ VizMo - Visualizing Mobile Broadband
 =============
 ## Documentation  ## 
 
-This branch will be used to store node.js, python, web content, deployment and various other documentation about the project.
+This branch will be used to store Git, Node.js, Python, and various other documentation.
 
-* [Git Access](git.md)
-* [Config File - Python](config-py.md)
-* [Config File - Node.js](config-nodejs.md)
-* [Requirements - Node.js](requirements.md)
-* [Pre-Deployment - Node.js](pre-deployment.md)
-* [Deployment - Node.js](deployment.md)
-* [Package - Node.js](package-json.md)
-* [Startup - Node.js](startup-script.md)
-* [Watch - Node.js](localhost--watch-setup.md)
-* [Minify - Node.js](minify.md)
+* Git
+  * [Repo Access](git.md)
+* Python
+  * [Config File](config-py.md)
+* Node.js
+  * [Config File](config-nodejs.md)
+  * [Requirements](requirements.md)
+  * [Pre-Deployment](pre-deployment.md)
+  * [Deployment](deployment.md)
+  * [Package](package-json.md)
+  * [Startup](startup-script.md)
+  * [Watch](localhost--watch-setup.md)
+  * [Minify](minify.md)
